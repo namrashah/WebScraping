@@ -100,7 +100,7 @@ namespace StaticScraper
                 }*/
             }
             
-            var table = htmlDocument.DocumentNode.SelectSingleNode("//*[@class=\"availabilityTable  \"]");
+            var table = htmlDocument.DocumentNode.SelectSingleNode("//table[@class=\"availabilityTable  \"]");
             if (table != null)
             {
                 var count = 0;
@@ -108,21 +108,50 @@ namespace StaticScraper
                 var tbody = table.SelectSingleNode("//./tbody");
                 var tr = tbody.SelectNodes("//./tr");
                 foreach (HtmlNode row in tr) {
-                    Console.WriteLine(++count);
+                    //Console.WriteLine(++count);
                     //Console.WriteLine(row.InnerHtml);
-                    var td = row.SelectNodes("//./td");
-                    
-                    foreach (HtmlNode n in td) {
-                        //Console.WriteLine("new");
-                        //Console.WriteLine(n.InnerHtml);
-                        //Console.WriteLine("over");
-                        /*var rent =*/ Console.WriteLine(n.SelectSingleNode("//*[@class=\"rent\"]").InnerHtml);
-                        //if (rent != null) {
-                            //foreach (HtmlNode r in rent) { Console.WriteLine(r.InnerHtml); }
-                        //}
+                    //var td = row.SelectNodes("//./td");
+
+                    //foreach (HtmlNode n in td) {
+                    //Console.WriteLine("new");
+                    //Console.WriteLine(n.InnerHtml);
+                    //Console.WriteLine("over");
+
+                    var baths = row.SelectSingleNode(".//*[@class=\"baths\"]");
+                    if (baths != null)
+                    {
+                        HtmlNode longText = baths.SelectSingleNode(".//*[@class=\"longText\"]");
+                        if (longText != null) Console.WriteLine("baths =  " + longText.InnerHtml);
                     }
-                    //Console.WriteLine(td.InnerHtml);
+
+                    var beds = row.SelectSingleNode(".//*[@class=\"beds\"]");
+                    if (baths != null)
+                    {
+                        HtmlNode longText = beds.SelectSingleNode(".//*[@class=\"longText\"]");
+                        if (longText != null) Console.WriteLine("beds =  " + longText.InnerHtml);
+                    }
+
+                    HtmlNode rent = row.SelectSingleNode(".//*[@class=\"rent\"]");
+                    /*var rent =*/
+                    if(rent!=null)Console.WriteLine("rent = "+rent.InnerHtml);
+
+                    HtmlNode deposit = row.SelectSingleNode(".//*[@class=\"deposit\"]");
+                    if (deposit != null) Console.WriteLine("deposit = "+deposit.InnerHtml);
+
+                    HtmlNode sqft = row.SelectSingleNode(".//*[@class=\"sqft\"]");
+                    if (sqft != null) Console.WriteLine("sqft =  "+sqft.InnerHtml);
+
+                    HtmlNode name = row.SelectSingleNode(".//*[@class=\"name  \"]");
+                    if (name != null) Console.WriteLine("name =  " + name.InnerHtml);
+
+                    HtmlNode availability = row.SelectSingleNode(".//*[@class=\"available\"]");
+                    if (availability != null) Console.WriteLine("availability =  " + availability.InnerHtml);
+
+                    
+
                 }
+                    //Console.WriteLine(td.InnerHtml);
+                //}
                 
                 Console.WriteLine(tr);
             }
